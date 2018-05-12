@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import PageHeader from './components/_page_header';
+import SearchView from './components/_search_view';
+import ListingView from './components/_listing_view';
 import './App.css';
 
 class App extends Component {
+
+
+
+  componentDidMount() {
+
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div className="app">
+        <PageHeader />
+        <div className="app-view-container">
+          <SearchView />
+          <ListingView />
+        </div>
       </div>
     );
   }
