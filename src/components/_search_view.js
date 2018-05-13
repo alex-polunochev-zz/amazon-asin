@@ -1,11 +1,11 @@
 import React from 'react';
-import SearchResult from './_search_result';
+import ProductSearchResult from '../containers/ProductSearchResult';
 import classNames from 'classnames';
 
 export default class SearchView extends React.Component {
 
   state = {
-    value: 'B002QYW8LW', // keep it here temporarily for easier testing
+    value: 'B009ZM9R4O', // keep it here temporarily for easier testing
     valid: true,
     isProcessing: false,
     searchResult: '',
@@ -19,8 +19,8 @@ export default class SearchView extends React.Component {
       textInput.focus();
     }
 
-    this.amazonUrl = 'https://www.amazon.com/dp/'; // B002QYW8LW
-    this.cors_api_url = 'https://alex-asin-test.herokuapp.com/';
+    this.amazonUrl = 'https://www.amazon.com/dp/';
+    this.cors_api_url = 'https://alex-asin-test2.herokuapp.com/';
   }
 
   doCORSRequest = (options, callback) => {
@@ -106,33 +106,33 @@ export default class SearchView extends React.Component {
     }
 
     const foundProductDetails = searchStatus === 200 && searchResult
-      ? <SearchResult
+      ? <ProductSearchResult
           result={searchResult}
           urlPattern={this.amazonUrl}
           asin={this.state.value} />
       : null;
 
     return (
-      <div className='search-container'>
+      <div className="search-container">
         <div className="paddedContainerHeader">
-          <h2>Enter ASIN to find product</h2>
-          <div className='paddedContainerBody'>
+          <h2>Enter ASIN to research product</h2>
+          <div className="paddedContainerBody">
             <form onSubmit={this.handleSubmit}>
               <div className="search-form">
                 <input
                   type="text"
                   ref="searchInput"
-                  placeholder="Type ASIN here"
+                  placeholder="Type ASIN, e.g. B002QYW8LW"
                   className={inputClasses}
                   value={this.state.value}
                   onChange={this.handleChange}
                   disabled = {isProcessing} />
 
-                <div className={searchIconClasses} title='Submit search' onClick={this.handleSubmit} />
+                <div className={searchIconClasses} title="Submit search" onClick={this.handleSubmit} />
               </div>
               {invalidInputMessage}
             </form>
-            <div className="search-container-results">
+            <div className="content">
               {spinner}
               {foundStatus}
               {foundProductDetails}
