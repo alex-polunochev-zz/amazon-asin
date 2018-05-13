@@ -5,13 +5,6 @@ import ListingView from './components/_listing_view';
 import './App.css';
 
 class App extends Component {
-
-
-
-  componentDidMount() {
-
-  }
-
   render() {
     return (
       <div className="app">

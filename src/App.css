@@ -100,7 +100,7 @@ h2 {
 }
 
 .search-container-results {
-  height: 200px;
+  min-height: 200px;
 }
 
 @import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
@@ -122,4 +122,34 @@ h2 {
 
 .fa-search--waiting:hover {
   cursor: wait;
+}
+
+.search-foundStatus {
+  margin: 10px 0;
+}
+
+.searchResult {
+  font-size: 14px;
+  color: rgb(17,17,17);
+}
+
+.searchResult-table td {
+  vertical-align: top;
+  border-top: 1px dotted #ccc;
+  padding: 5px;
+}
+
+.searchResult-table td.label{
+  background-color: rgb(245, 245, 245);
+}
+
+.searchResult-table tr:last-child td {
+  border-bottom: 1px dotted #ccc;
+}
+
+.searchResult-link {
+  font-size: 12px;
+  margin-left: 10px;
+  padding: 0 5px;
+  text-decoration-style: dotted;
 }

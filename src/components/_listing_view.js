@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 export default class ListingView extends React.Component {
 
@@ -6,7 +6,7 @@ export default class ListingView extends React.Component {
     return (
       <div className="listing-container">
         <div className="paddedContainerHeader">
-          <h2>Collected product details</h2>
+          <h2>Collected products</h2>
           <div className='paddedContainerBody'>
             Here goes the form
           </div>

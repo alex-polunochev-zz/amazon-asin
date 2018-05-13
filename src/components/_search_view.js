@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
+import SearchResult from './_search_result';
 import classNames from 'classnames';
 
 export default class SearchView extends React.Component {
 
   state = {
-    value: '',
+    value: 'B002QYW8LW', // keep it here temporarily for easier testing
     valid: true,
     isProcessing: false,
-    foundProductPage: '',
+    searchResult: '',
     searchStatus: ''
   };
 
@@ -32,19 +33,19 @@ export default class SearchView extends React.Component {
   };
 
   handleAmazonResponse = ({status = 0, response = ''}) => {
-    let productPage = '';
+    let searchResult = '';
 
     if (status === 200){
-      productPage = response;
+      searchResult = response;
     }
 
-    this.setState({isProcessing: false, foundProductPage: productPage, searchStatus: status});
+    this.setState({isProcessing: false, searchResult: searchResult, searchStatus: status});
   };
 
   handleChange = (event) => {
     const newValue = event.target.value
 
-    // ASIN is an alphanumeric string up to 10 characters
+    // ASIN is an alphanumeric string up to 10 characters. 0 character is ok (default state)
     const validInput = newValue.length === 0 || (newValue.length <= 10 && newValue.match(/^[a-z0-9]+$/i));
 
     this.setState({value: newValue, valid: validInput});
@@ -53,7 +54,8 @@ export default class SearchView extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    if (this.state.valid && !this.state.isProcessing) {
+    if (this.state.valid && !this.state.isProcessing
+      && this.state.value && this.state.value.trim().length) {
       this.setState({isProcessing: true, searchStatus: ''});
 
       this.doCORSRequest({
@@ -66,11 +68,7 @@ export default class SearchView extends React.Component {
   };
 
   render() {
-    const {isProcessing, valid, searchStatus, foundProductPage} = this.state;
-
-    const spinner = isProcessing
-      ? <i className="fa fa-circle-o-notch fa-spin"></i>
-      : '';
+    const {isProcessing, valid, searchStatus, searchResult} = this.state;
 
     const inputClasses = classNames({
       "input": true,
@@ -92,18 +90,32 @@ export default class SearchView extends React.Component {
       </div>
     );
 
-    const notFound = searchStatus && searchStatus !== 200
-     ? <div>Product not found</div>
-     : '';
-
-    const foundProductDetails = searchStatus === 200 && foundProductPage
-      ? <div>Product found </div>
+    const spinner = isProcessing
+      ? <i className="fa fa-circle-o-notch fa-spin"></i>
       : '';
+
+    let foundStatus;
+    if (searchStatus){
+      foundStatus = (
+        <div className="search-foundStatus">
+          Product
+          {searchStatus !== 200 ? ' not ' : ' '}
+          found
+        </div>
+      );
+    }
+
+    const foundProductDetails = searchStatus === 200 && searchResult
+      ? <SearchResult
+          result={searchResult}
+          urlPattern={this.amazonUrl}
+          asin={this.state.value} />
+      : null;
 
     return (
       <div className='search-container'>
         <div className="paddedContainerHeader">
-          <h2>Enter ASIN to Find product</h2>
+          <h2>Enter ASIN to find product</h2>
           <div className='paddedContainerBody'>
             <form onSubmit={this.handleSubmit}>
               <div className="search-form">
@@ -122,7 +134,7 @@ export default class SearchView extends React.Component {
             </form>
             <div className="search-container-results">
               {spinner}
-              {notFound}
+              {foundStatus}
               {foundProductDetails}
             </div>
           </div>
