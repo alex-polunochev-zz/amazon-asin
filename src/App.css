@@ -21,12 +21,13 @@ body {
 .app-view-container {
   display: flex;
   flex-direction: row;
-  overflow: none;
+  overflow: hidden;
+  flex-wrap: wrap;
 }
 
 .header {
   height: 60px;
-  background-color: #232f3e;
+  background-color: #232f3e; /* rgba(35, 47, 62, 1) */
   font-family: Montserrat, sans-serif;
 }
 
@@ -54,4 +55,71 @@ h2 {
   padding: 10px;
   margin: 0;
   color: white;
+}
+
+.search-form {
+  display: flex;
+}
+
+.input {
+  outline: none;
+  width: 200px;
+  padding: 6px 12px 6px 12px;
+  background: white;
+  border-radius: 2px;
+  font-size: 14px;
+  margin-bottom: 6px;
+  display: block;
+  color: #3f3b49;
+  line-height: 2.15em;
+  border: 1px solid rgba(35, 47, 62, 0.25);
+}
+
+.input::placeholder {
+  font-style: italic;
+  color: #b3b3b3;
+}
+
+.input--waiting {
+  cursor: wait;
+}
+
+.input--invalid {
+  border-color: red;
+}
+
+.input--disabled {
+  color: rgba(35, 47, 62, 0.25);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.search-form-smallFont {
+  font-size: 10px;
+  color: red;
+  min-height: 22px;
+}
+
+.search-container-results {
+  height: 200px;
+}
+
+@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
+.fa-search {
+  font-size: 24px;
+  margin: 10px;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.fa-search:hover {
+  color: #232f3e;
+}
+
+.fa-search--disabled, .fa-search--disabled:hover {
+  color: rgba(35, 47, 62, 0.25);
+  cursor: not-allowed;
+}
+
+.fa-search--waiting:hover {
+  cursor: wait;
 }
