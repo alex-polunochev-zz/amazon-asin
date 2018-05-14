@@ -32,12 +32,10 @@ export default class ProductRow extends React.Component {
     const asinLink = <a href={productUrl} onClick={(e) => {e.stopPropagation()}}>{asin}</a>; 
     const addedAt = moment(timestamp).format("MM/DD/YY");
 
-    let rankRender;
-    // handle different Rank text block formats by keeping only the top rating
-    if (rank.includes(' (')) {
-      rankRender = rank.substring(0, rank.indexOf(' ('));
-    } else if (rank.includes(' > ')) {
-      rankRender = rank.substring(0, rank.indexOf(' > '));
+    let rankRender = rank;
+    // a bit more string massaging to get rid of secondary ratings
+    if (rank.indexOf('#', 1) > 0) {
+      rankRender = rank.substring(0, rank.indexOf('#', 1));
     }
 
     return (

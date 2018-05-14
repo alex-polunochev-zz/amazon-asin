@@ -10,7 +10,7 @@ export default class SearchView extends React.Component {
     isProcessing: false,
     searchResult: '',
     searchStatus: '',
-    corsApiProxyUrl: 'https://cors-anywhere-1.herokuapp.com/'
+    corsApiProxyUrl: 'https://cors-anywhere.herokuapp.com/'
   };
 
   componentDidMount() {

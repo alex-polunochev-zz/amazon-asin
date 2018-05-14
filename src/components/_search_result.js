@@ -36,19 +36,22 @@ export default class SearchResult extends React.Component {
       // As we are scraping the 3rd party page here, at some point the layout and mnemonics can change there.
       // Gracefully handle, indicate data is no longer available.
       const title = !titleRaw ? 'N/A' : titleRaw.innerText.trim();
-      const ratingString = !ratingStringRaw ? 'N/A' : ratingStringRaw.innerText;
- 
-      // Rating string has a shape of "4.7 out of 5 stars". Grab first number in the string.
-      const floatRegex = /[+-]?\d+(\.\d+)?/g;
-      const rating = ratingString.match(floatRegex)[0];
+
+      let rating = 'N/A';
+      if (ratingStringRaw) {
+        const ratingString = ratingStringRaw.innerText;
+        // Rating string has a shape of "4.7 out of 5 stars". Grab first number in the string.
+        const floatRegex = /[+-]?\d+(\.\d+)?/g;
+        rating = ratingString.match(floatRegex)[0];
+      }
 
       let rank = this.scrapeRank(doc);
       rank = !rank ? 'N/A' : rank;
 
       this.setState({
-        title: title,
-        rating: rating,
-        rank: rank
+        title,
+        rating,
+        rank
       });
     }
   }
@@ -78,9 +81,16 @@ export default class SearchResult extends React.Component {
     if (rankString) {
       rankString = rankString
         // clean up
-        .replace('<b>Amazon Best Sellers Rank:</b>', '')
+        .replace('Amazon Best Sellers Rank:', '')
         .replace(/\n\s*\n/g, '\n') // ranking html block markup is quite noisy and full of repeated linebreaks, reduce their amount
         .trim()
+
+      // handle different Rank text block formats by keeping only the top rating
+      if (rankString.includes(' (')) {
+        rankString = rankString.substring(0, rankString.indexOf(' ('));
+      } else if (rankString.includes(' > ')) {
+        rankString = rankString.substring(0, rankString.indexOf('#', 1));
+      }
     }
 
     return rankString;
