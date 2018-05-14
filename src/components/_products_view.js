@@ -49,8 +49,6 @@ export default class ProductsView extends React.Component {
   renderProducts = () => {
     const {products} = this.state;
 
-    console.log('Products: %o', Object.keys(products));
-
     const productsRows = Object.keys(products).map(asin => {
       const data = products[asin];
       return <ProductRow key={asin} asin={asin} data={data}/>;
