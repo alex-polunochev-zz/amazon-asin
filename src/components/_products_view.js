@@ -24,7 +24,10 @@ export default class ProductsView extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('NextProps: %o', nextProps);
+    // Will receieve props from Redux store
+    if (nextProps.products && !_.isEqual(this.props.products, nextProps.products)) {
+      this.setState({products: nextProps.products});
+    }
   }
 
   handleTableClick = (e) => {

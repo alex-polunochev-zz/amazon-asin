@@ -9,7 +9,8 @@ export default class SearchView extends React.Component {
     valid: true,
     isProcessing: false,
     searchResult: '',
-    searchStatus: ''
+    searchStatus: '',
+    corsApiProxyUrl: 'https://cors-anywhere-1.herokuapp.com/'
   };
 
   componentDidMount() {
@@ -20,12 +21,11 @@ export default class SearchView extends React.Component {
     }
 
     this.amazonUrl = 'https://www.amazon.com/dp/';
-    this.cors_api_url = 'https://cors-anywhere-1.herokuapp.com/';
   }
 
   doCORSRequest = (options, callback) => {
     const x = new XMLHttpRequest();
-    x.open(options.method, this.cors_api_url + options.url);
+    x.open(options.method, this.state.corsApiProxyUrl + options.url);
     x.onload = x.onerror = function() {
       callback({status: x.status, response: x.response});
     };
@@ -67,6 +67,45 @@ export default class SearchView extends React.Component {
     }
   };
 
+  changeCorsApiProxyUrl = (event) => {
+    this.setState({
+      corsApiProxyUrl: event.target.value
+    });
+  };
+
+  renderSearchStatus = (searchStatus) => {
+    let statusRender;
+
+    if (searchStatus){
+      if (searchStatus >= 500) {
+        statusRender = (
+          <div className="search-foundStatus">
+            Service is unavailable at this moment.
+            <p/>
+            <div className="search-proxyServer-label">
+              <i className="fa fa-exclamation-triangle search-proxyServer-alertIcon"></i>
+              Select alternative proxy server for querying Amazon:
+            </div>
+            <select className="search-proxyServer-selector" value={this.state.corsApiProxyUrl} onChange={this.changeCorsApiProxyUrl}>
+              <option>https://cors-anywhere.herokuapp.com/</option>
+              <option>https://cors-anywhere-1.herokuapp.com/</option>
+            </select>
+          </div>
+        );
+      } else {
+        statusRender = (
+          <div className="search-foundStatus">
+              Product
+                {searchStatus !== 200 ? ' not ' : ' '}
+              found.
+          </div>
+        );
+      }
+    }
+
+    return statusRender;
+  }
+
   render() {
     const {isProcessing, valid, searchStatus, searchResult} = this.state;
 
@@ -94,24 +133,7 @@ export default class SearchView extends React.Component {
       ? <i className="fa fa-circle-o-notch fa-spin"></i>
       : '';
 
-    let foundStatus;
-    if (searchStatus){
-      if (searchStatus >= 500) {
-        foundStatus = (
-          <div className="search-foundStatus">
-            Service is unavailable at this moment.
-          </div>
-        );
-      } else {
-        foundStatus = (
-          <div className="search-foundStatus">
-              Product
-                {searchStatus !== 200 ? ' not ' : ' '}
-              found.
-          </div>
-        );
-      }
-    }
+    const foundStatus = this.renderSearchStatus(searchStatus);
 
     const foundProductDetails = searchStatus === 200 && searchResult
       ? <ProductSearchResult

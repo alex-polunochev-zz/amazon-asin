@@ -176,6 +176,24 @@ h2 {
   text-decoration-style: dotted;
 }
 
+.search-proxyServer-label {
+  color: black;
+  font-size: 14px;
+  margin-top: 30px;
+  padding-bottom: 10px;
+}
+
+.search-proxyServer-alertIcon {
+  color: red;
+  font-size: 20px;
+  padding-right: 5px;
+}
+
+.search-proxyServer-selector {
+  padding: 5px;
+  background-color: white;
+}
+
 button {
   background-color: #509e51;
   color: white;
@@ -216,6 +234,9 @@ button:active {
   border-bottom: none;
   padding: 0.5em;
   font-size: 14px;
+  max-height: 800px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .product-row {
@@ -233,6 +254,7 @@ button:active {
 
 .wider-col-2 {
   flex-grow: 3;
+  overflow: hidden;
 }
 
 .narrow-col {
