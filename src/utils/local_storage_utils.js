@@ -2,6 +2,24 @@ import _ from 'lodash';
 
 const AMZ_PRODUCTS_KEY = 'amz_products';
 
+export function getProductFromLocalStorage(asin) {
+  let product = {};
+  try {
+    let products = localStorage.getItem(AMZ_PRODUCTS_KEY);
+
+    if(products) {
+      products = JSON.parse(products);
+      // not optimal search
+      const key = Object.keys(products).filter(nextKey => nextKey === asin);
+      product = products[key];
+    }
+  }
+  catch(err) {
+    console.error('Couldn\'t recover object from LocalStorage with key %o: %o', AMZ_PRODUCTS_KEY, err);
+  }
+  return product;
+};
+
 export function getProductsFromLocalStorage() {
   let products = {};
 

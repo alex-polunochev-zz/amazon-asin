@@ -96,13 +96,21 @@ export default class SearchView extends React.Component {
 
     let foundStatus;
     if (searchStatus){
-      foundStatus = (
-        <div className="search-foundStatus">
-          Product
-          {searchStatus !== 200 ? ' not ' : ' '}
-          found
-        </div>
-      );
+      if (searchStatus >= 500) {
+        foundStatus = (
+          <div className="search-foundStatus">
+            Service is unavailable at this moment.
+          </div>
+        );
+      } else {
+        foundStatus = (
+          <div className="search-foundStatus">
+              Product
+                {searchStatus !== 200 ? ' not ' : ' '}
+              found.
+          </div>
+        );
+      }
     }
 
     const foundProductDetails = searchStatus === 200 && searchResult

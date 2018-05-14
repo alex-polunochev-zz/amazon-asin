@@ -67,7 +67,7 @@ export default class SearchResult extends React.Component {
       // less typical case
       const list = doc.querySelectorAll('#productDetails_detailBullets_sections1 > tbody > tr');
       let rankS = null;
-      const filtered = Array.prototype.forEach.call(list, node => {
+      Array.prototype.forEach.call(list, node => {
         if (node.querySelector('th').innerText.toLowerCase().includes('best sellers rank')) {
           rankS = node.querySelector('td').innerText;
         }

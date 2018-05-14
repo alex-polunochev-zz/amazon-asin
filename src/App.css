@@ -33,12 +33,12 @@ body {
 
 .search-container {
   flex: 2;
-  min-width: 300px;
+  min-width: 400px;
 }
 
 .listing-container {
   flex: 3;
-  min-width: 300px;
+  min-width: 600px;
 }
 
 .paddedContainerHeader {

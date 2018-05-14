@@ -1,8 +1,5 @@
-export const addProduct = ({asin, title, rating, rank}) => ({
+export const addProduct = asin => ({
   type: 'ADD_PRODUCT',
-  asin,
-  title,
-  rating,
-  rank
+  asin
 });
 

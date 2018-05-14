@@ -2,8 +2,17 @@ import React from 'react';
 import {getProductsFromLocalStorage} from '../utils/local_storage_utils';
 import ProductRow from './_product_row';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
 
 export default class ProductsView extends React.Component {
+
+  static propTypes = {
+    products: PropTypes.object
+  }
+
+  static defaultProps = {
+    products: {}
+  }
 
   state = {
     products: {}
@@ -12,6 +21,10 @@ export default class ProductsView extends React.Component {
   componentDidMount() {
     const products = getProductsFromLocalStorage();
     this.setState({products});
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('NextProps: %o', nextProps);
   }
 
   handleTableClick = (e) => {
@@ -45,8 +58,8 @@ export default class ProductsView extends React.Component {
         <div className="product-row product-row-header">
           <div title='sort a-z' className="product-row-item" data-field="asin">ASIN</div>
           <div title='sort a-z' className="product-row-item wider-col-2" data-field="title">Title</div>
-          <div title='sort a-z' className="product-row-item narrow-col" data-field="rating"><i className="fa fa-star"></i></div>
-          <div title='sort a-z' className="product-row-item" data-field="rating">Rank</div>
+          <div title='sort 0-5' className="product-row-item narrow-col" data-field="rating"><i className="fa fa-star"></i></div>
+          <div title='sort 1-9999' className="product-row-item" data-field="rank">Rank</div>
           <div title='sort a-z' className="product-row-item" data-field="timestamp">Added</div>
         </div>
         {productsRows}
