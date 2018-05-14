@@ -20,7 +20,7 @@ export default class SearchView extends React.Component {
     }
 
     this.amazonUrl = 'https://www.amazon.com/dp/';
-    this.cors_api_url = 'https://alex-asin-test2.herokuapp.com/';
+    this.cors_api_url = 'https://cors-anywhere-1.herokuapp.com/';
   }
 
   doCORSRequest = (options, callback) => {
