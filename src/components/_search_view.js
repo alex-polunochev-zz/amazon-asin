@@ -5,7 +5,7 @@ import classNames from 'classnames';
 export default class SearchView extends React.Component {
 
   state = {
-    value: 'B009ZM9R4O', // keep it here temporarily for easier testing
+    value: '', // e.g. B009ZM9R4O
     valid: true,
     isProcessing: false,
     searchResult: '',
