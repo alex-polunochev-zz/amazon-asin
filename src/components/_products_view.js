@@ -37,8 +37,9 @@ export default class ProductsView extends React.Component {
     const filter = selected.dataset.field;
     [].slice
       .call(container.querySelectorAll('[data-' + filter +']'))
-      .sort((a,b) => { 
-        return (a.dataset[filter].toLowerCase() > b.dataset[filter].toLowerCase()) - (a.dataset[filter].toLowerCase() < b.dataset[filter].toLowerCase()); 
+      .sort((a,b) => {
+        const comparison = (a.dataset[filter].toLowerCase() > b.dataset[filter].toLowerCase()) - (a.dataset[filter].toLowerCase() < b.dataset[filter].toLowerCase());
+        return filter=== 'rating' ? !comparison : comparison;
       })
       .map((n,i) => {
         n.parentElement.style.order = i+1; 
@@ -59,7 +60,7 @@ export default class ProductsView extends React.Component {
         <div className="product-row product-row-header">
           <div title='sort a-z' className="product-row-item" data-field="asin">ASIN</div>
           <div title='sort a-z' className="product-row-item wider-col-2" data-field="title">Title</div>
-          <div title='sort 0-5' className="product-row-item narrow-col" data-field="rating"><i className="fa fa-star"></i></div>
+          <div title='sort 5-0' className="product-row-item narrow-col" data-field="rating"><i className="fa fa-star"></i></div>
           <div title='sort 1-9999' className="product-row-item" data-field="rank">Rank</div>
           <div title='sort a-z' className="product-row-item" data-field="timestamp">Added</div>
         </div>
